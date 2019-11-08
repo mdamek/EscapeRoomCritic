@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using EscapeRoomCritic.Core.Models;
+using EscapeRoomCritic.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EscapeRoomCritic.Web.Controllers
@@ -7,36 +9,57 @@ namespace EscapeRoomCritic.Web.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        // GET api/values
+        private readonly IIdentityService _identityService;
+        private readonly IUserService _userService;
+
+        public UsersController(IIdentityService identityService, IUserService userService)
+        {
+            _identityService = identityService;
+            _userService = userService;
+        }
+
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate(Credentials credentials)
+        {
+            var user = _identityService.Authenticate(credentials.Username, credentials.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
+        }
+
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<User>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_userService.GetAll());
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<User> Get(int id)
         {
-            return "value";
+            return Ok(_userService.GetById(id));
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] User value)
         {
+            _userService.Add(value);
+            return Ok();
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] User value)
         {
+            _userService.Edit(id, value);
+            return Ok();
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            _userService.Delete(id);
+            return Ok();
         }
     }
 }
