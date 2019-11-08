@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Collections.Generic;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Repositories;
 

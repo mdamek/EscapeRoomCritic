@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +14,7 @@ namespace EscapeRoomCritic.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
+
         public void Add(User user)
         {
             _dbContext.Users.Add(user);

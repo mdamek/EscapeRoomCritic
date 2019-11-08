@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using EscapeRoomCritic.Core.Services;
 using Microsoft.Extensions.Configuration;
 
