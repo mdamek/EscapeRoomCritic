@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EscapeRoomCritic.Core.IdentityManager;
 using EscapeRoomCritic.Core.Repositories;
 using EscapeRoomCritic.Core.Services;
 using EscapeRoomCritic.Infrastructure;

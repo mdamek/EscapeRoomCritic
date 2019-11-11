@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.DTOs.Identity;
+using EscapeRoomCritic.Core.DTOs.Users;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Services;
 using Microsoft.AspNetCore.Authorization;

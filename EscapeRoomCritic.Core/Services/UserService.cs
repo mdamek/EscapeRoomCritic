@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.DTOs.Users;
 using EscapeRoomCritic.Core.Exceptions;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Repositories;

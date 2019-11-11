@@ -1,8 +1,7 @@
 ﻿using System.IO;
-using EscapeRoomCritic.Core.Services;
 using Microsoft.Extensions.Configuration;
 
-namespace EscapeRoomCritic.Core.IdentityManager
+namespace EscapeRoomCritic.Core.Services
 {
     public class SecretProvider : ISecretProvider
     {

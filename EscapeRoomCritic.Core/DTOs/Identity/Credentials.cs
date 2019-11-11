@@ -1,4 +1,4 @@
-﻿namespace EscapeRoomCritic.Core.Models
+﻿namespace EscapeRoomCritic.Core.DTOs.Identity
 {
     public class Credentials
     {

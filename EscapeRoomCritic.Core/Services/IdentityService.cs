@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.DTOs.Users;
 using EscapeRoomCritic.Core.Exceptions;
 using EscapeRoomCritic.Core.Repositories;
 using Microsoft.IdentityModel.Tokens;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.DTOs.Users;
 
 namespace EscapeRoomCritic.Core.Services
 {

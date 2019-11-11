@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace EscapeRoomCritic.Core.DTOs
+﻿namespace EscapeRoomCritic.Core.DTOs.Users
 {
     public class UserTokenDto
     {
