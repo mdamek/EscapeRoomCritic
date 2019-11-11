@@ -1,0 +1,15 @@
+﻿using System.Collections.Generic;
+using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.DTOs.EscapeRooms;
+
+namespace EscapeRoomCritic.Core.Services
+{
+    public interface IEscapeRoomService
+    {
+        IEnumerable<EscapeRoomDto> GetAll();
+        EscapeRoomDto GetById(int id);
+        void Add(NewEscapeRoomDto escapeRoom);
+        void Edit(int id, EditEscapeRoomDto escapeRoom);
+        void Delete(int id);
+    }
+}

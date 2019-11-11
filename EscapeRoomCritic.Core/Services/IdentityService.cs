@@ -2,7 +2,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using EscapeRoomCritic.Core.DTOs;
 using EscapeRoomCritic.Core.DTOs.Users;
 using EscapeRoomCritic.Core.Exceptions;
 using EscapeRoomCritic.Core.Repositories;
@@ -33,14 +32,14 @@ namespace EscapeRoomCritic.Core.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new UserTokenDto{FirstName = user.FirstName, LastName = user.LastName, Role = user.Role, Token = tokenHandler.WriteToken(token), Username = user.Username};
+            return new UserTokenDto{FirstName = user.FirstName, LastName = user.LastName, Role = user.Role, Token = "Bearer " + tokenHandler.WriteToken(token), Username = user.Username};
         }
     }
 }

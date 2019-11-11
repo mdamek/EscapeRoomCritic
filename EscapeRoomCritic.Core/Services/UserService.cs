@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EscapeRoomCritic.Core.DTOs;
 using EscapeRoomCritic.Core.DTOs.Users;
 using EscapeRoomCritic.Core.Exceptions;
 using EscapeRoomCritic.Core.Models;
@@ -22,7 +21,7 @@ namespace EscapeRoomCritic.Core.Services
             var allUsers = _userRepository.GetUsers();
             return allUsers.ToList().ConvertAll(e => new UserDto{FirstName = e.FirstName, LastName = e.LastName, Role = e.Role, Username = e.Username});
         }
-
+        
         public UserDto GetById(int id)
         {
             var user = _userRepository.FindById(id);
@@ -62,9 +61,9 @@ namespace EscapeRoomCritic.Core.Services
             _userRepository.Remove(id);
         }
 
-        public void ValidateRoles(string role)
+        private void ValidateRoles(string role)
         {
-            if(string.IsNullOrWhiteSpace(role) || role != Role.Visitor || role != Role.Owner || role != Role.Admin) throw new BadValueException(role + " is not valid role"); 
+            if(string.IsNullOrWhiteSpace(role) || new List<string>{Role.Owner, Role.Admin, Role.Visitor}.Contains(role) == false) throw new BadValueException(role + " is not valid role"); 
         }
     }
 }

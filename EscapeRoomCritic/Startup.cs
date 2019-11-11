@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using EscapeRoomCritic.Core.Repositories;
@@ -28,7 +31,6 @@ namespace EscapeRoomCritic.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -39,6 +41,10 @@ namespace EscapeRoomCritic.Web
             services.Add(new ServiceDescriptor(typeof(ISecretProvider), typeof(SecretProvider), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IUserService), typeof(UserService), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IUserRepository), typeof(UserRepository), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IEscapeRoomService), typeof(EscapeRoomService), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IEscapeRoomRepository), typeof(EscapeRoomRepository), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IReviewService), typeof(ReviewService), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IReviewRepository), typeof(ReviewRepository), ServiceLifetime.Scoped));
 
             var secret = new SecretProvider();
             var key = Encoding.ASCII.GetBytes(secret.GetSecret());
@@ -59,6 +65,7 @@ namespace EscapeRoomCritic.Web
                         ValidateAudience = false
                     };
                 });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", 
@@ -80,10 +87,12 @@ namespace EscapeRoomCritic.Web
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
                     { "Bearer", Enumerable.Empty<string>() },
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -94,7 +103,14 @@ namespace EscapeRoomCritic.Web
             {
                 app.UseHsts();
             }
+
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
 

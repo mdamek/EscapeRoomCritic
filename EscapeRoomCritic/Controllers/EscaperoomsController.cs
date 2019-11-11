@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using EscapeRoomCritic.Core.DTOs.Users;
+using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.DTOs.EscapeRooms;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -10,49 +11,46 @@ namespace EscapeRoomCritic.Web.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class EscapeRoomsController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IEscapeRoomService _escapeRoomService;
 
-        public UsersController(IUserService userService)
+        public EscapeRoomsController(IEscapeRoomService escapeRoomService)
         {
-            _userService = userService;
+            _escapeRoomService = escapeRoomService;
         }
 
+
         /// <summary>
-        /// Get all users
+        /// Get all escape rooms
         /// </summary>
         /// <response code="200">Returns token</response>
         /// <response code="400">Validation or bad value error</response>
-        /// <response code="401">Authorization error - access denied</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
-        [Authorize(Roles = Role.Admin)]
+        [AllowAnonymous]
         [HttpGet]
-        public ActionResult<IEnumerable<UserDto>> Get()
+        public ActionResult<IEnumerable<EscapeRoomDto>> Get()
         {
-            return Ok(_userService.GetAll());
+            return Ok(_escapeRoomService.GetAll());
         }
 
         /// <summary>
-        /// Get user by id
+        /// Get escape room by id
         /// </summary>
         /// <response code="200">Returns token</response>
         /// <response code="400">Validation or bad value error</response>
-        /// <response code="401">Authorization error - access denied</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
-        [Authorize(Roles = Role.Visitor + "," + Role.Admin)]
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public ActionResult<UserDto> Get(int id)
+        public ActionResult<EscapeRoomDto> Get(int id)
         {
-            return Ok(_userService.GetById(id));
+            return Ok(_escapeRoomService.GetById(id));
         }
 
         /// <summary>
-        /// Add user
+        /// Add escape room
         /// </summary>
         /// <response code="200">Returns token</response>
         /// <response code="400">Validation or bad value error</response>
@@ -60,16 +58,16 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Role.Owner + ", " + Role.Admin)]
         [HttpPost]
-        public ActionResult Post([FromBody] NewUserDto value)
+        public ActionResult Post([FromBody] NewEscapeRoomDto value)
         {
-            _userService.Add(value);
+            _escapeRoomService.Add(value);
             return Ok();
         }
 
         /// <summary>
-        /// Edit user
+        /// Edit escape room
         /// </summary>
         /// <response code="200">Returns token</response>
         /// <response code="400">Validation or bad value error</response>
@@ -77,16 +75,16 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = Role.Visitor + "," + Role.Admin)]
+        [Authorize(Roles = Role.Owner + ", " + Role.Admin)]
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] EditUserDto value)
+        public ActionResult Put(int id, [FromBody] EditEscapeRoomDto value)
         {
-            _userService.Edit(id, value);
+            _escapeRoomService.Edit(id, value);
             return Ok();
         }
 
         /// <summary>
-        /// Delete user
+        /// Delete escape room
         /// </summary>
         /// <response code="200">Returns token</response>
         /// <response code="400">Validation or bad value error</response>
@@ -94,11 +92,11 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Role.Owner + ", " + Role.Admin)]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            _userService.Delete(id);
+            _escapeRoomService.Delete(id);
             return Ok();
         }
     }

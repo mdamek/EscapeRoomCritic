@@ -43,8 +43,8 @@ namespace EscapeRoomCritic.Infrastructure.Repositories
 
         public User FindById(int userId)
         {
-            if(_dbContext.Users.Any(e => e.Id == userId) == false) throw new CanNotFindValueException("Value is not available");
-            return _dbContext.Users.Find(userId);
+            if(_dbContext.Users.Any(e => e.UserId == userId) == false) throw new CanNotFindValueException("Value is not available");
+            return _dbContext.Users.Include(e => e.EscapeRooms).FirstOrDefault(e => e.UserId == userId);
         }
 
         public User CheckCredentials(string username, string password)
