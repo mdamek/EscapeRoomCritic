@@ -1,13 +1,13 @@
-﻿
-namespace EscapeRoomCritic.Core.Models
+﻿using Newtonsoft.Json;
+
+namespace EscapeRoomCritic.Core.DTOs
 {
-    public class User
+    public class UserTokenDto
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
         public string Role { get; set; }
+        public string Token { get; set; }
     }
 }

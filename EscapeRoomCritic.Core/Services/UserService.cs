@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.Exceptions;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Repositories;
 
@@ -13,25 +16,44 @@ namespace EscapeRoomCritic.Core.Services
             _userRepository = userRepository;
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<UserDto> GetAll()
         {
             var allUsers = _userRepository.GetUsers();
-            return allUsers;
+            return allUsers.ToList().ConvertAll(e => new UserDto{FirstName = e.FirstName, LastName = e.LastName, Role = e.Role, Username = e.Username});
         }
 
-        public User GetById(int id)
+        public UserDto GetById(int id)
         {
-            return _userRepository.FindById(id);
+            var user = _userRepository.FindById(id);
+            return new UserDto{FirstName = user.FirstName, LastName = user.LastName, Username = user.Username, Role = user.Role};
         }
 
-        public void Add(User user)
+        public void Add(NewUserDto user)
         {
-            _userRepository.Add(user);
+            ValidateRoles(user.Role);
+            var newUser = new User
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = user.Password,
+                Role = user.Role,
+                Username = user.Username
+            };
+            _userRepository.Add(newUser);
         }
 
-        public User Edit(int id, User user)
+        public void Edit(int id, EditUserDto editUser)
         {
-            return _userRepository.Edit(id, user);
+            ValidateRoles(editUser.Role);
+            var user = new User
+            {
+                FirstName = editUser.FirstName,
+                LastName = editUser.LastName,
+                Password = editUser.Password,
+                Role = editUser.Role,
+                Username = editUser.Username
+            };
+            _userRepository.Edit(id, user);
         }
 
         public void Delete(int id)
@@ -39,6 +61,9 @@ namespace EscapeRoomCritic.Core.Services
             _userRepository.Remove(id);
         }
 
-
+        public void ValidateRoles(string role)
+        {
+            if(string.IsNullOrWhiteSpace(role) || role != Role.Visitor || role != Role.Owner || role != Role.Admin) throw new BadValueException(role + " is not valid role"); 
+        }
     }
 }

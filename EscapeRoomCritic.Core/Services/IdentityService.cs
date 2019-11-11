@@ -2,7 +2,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using EscapeRoomCritic.Core.Models;
+using EscapeRoomCritic.Core.DTOs;
+using EscapeRoomCritic.Core.Exceptions;
 using EscapeRoomCritic.Core.Repositories;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,12 +19,12 @@ namespace EscapeRoomCritic.Core.Services
             _userRepository = userRepository;
             _secretProvider = secretProvider;
         }
-        public User Authenticate(string username, string password)
+        public UserTokenDto Authenticate(string username, string password)
         {
             var user = _userRepository.CheckCredentials(username, password);
 
             if (user == null)
-                return null;
+                throw new BadCredentialsException("Username or password is incorrect");
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secretProvider.GetSecret());
@@ -38,11 +39,7 @@ namespace EscapeRoomCritic.Core.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
-
-            user.Password = null;
-
-            return user;
+            return new UserTokenDto{FirstName = user.FirstName, LastName = user.LastName, Role = user.Role, Token = tokenHandler.WriteToken(token), Username = user.Username};
         }
     }
 }

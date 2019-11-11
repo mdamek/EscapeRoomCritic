@@ -1,9 +1,9 @@
-﻿using EscapeRoomCritic.Core.Models;
+﻿using EscapeRoomCritic.Core.DTOs;
 
 namespace EscapeRoomCritic.Core.Services
 {
     public interface IIdentityService
     {
-        User Authenticate(string username, string password);
+        UserTokenDto Authenticate(string username, string password);
     }
 }

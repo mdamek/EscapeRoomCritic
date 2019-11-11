@@ -8,9 +8,10 @@ namespace EscapeRoomCritic.Core.IdentityManager
     {
         public string GetSecret()
         {
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("../IdentityConfiguration/secret.json");
+                .AddJsonFile(Directory.GetCurrentDirectory() + "\\..\\EscapeRoomCritic.Core\\IdentityConfiguration\\secret.json");
 
             var configuration = builder.Build();
             return configuration["IdentitySecret:Secret"];

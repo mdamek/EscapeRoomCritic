@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using EscapeRoomCritic.Core.DTOs;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EscapeRoomCritic.Web.Controllers
@@ -18,43 +20,45 @@ namespace EscapeRoomCritic.Web.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate(Credentials credentials)
         {
             var user = _identityService.Authenticate(credentials.Username, credentials.Password);
-
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<UserDto>> Get()
         {
             return Ok(_userService.GetAll());
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<UserDto> Get(int id)
         {
             return Ok(_userService.GetById(id));
         }
 
+        //[Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public ActionResult Post([FromBody] User value)
+        public ActionResult Post([FromBody] NewUserDto value)
         {
             _userService.Add(value);
             return Ok();
         }
 
+        //[Authorize(Roles = Role.Visitor)]
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User value)
+        public ActionResult Put(int id, [FromBody] EditUserDto value)
         {
             _userService.Edit(id, value);
             return Ok();
         }
 
+        //[Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
