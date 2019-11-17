@@ -38,7 +38,6 @@ namespace EscapeRoomCritic.Web
             services.AddDbContext<EscapeRoomCriticDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EscapeRoomCriticDatabase")));
             services.Add(new ServiceDescriptor(typeof(IIdentityService), typeof(IdentityService), ServiceLifetime.Scoped));
-            services.Add(new ServiceDescriptor(typeof(ISecretProvider), typeof(SecretProvider), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IUserService), typeof(UserService), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IUserRepository), typeof(UserRepository), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IEscapeRoomService), typeof(EscapeRoomService), ServiceLifetime.Scoped));
@@ -48,9 +47,8 @@ namespace EscapeRoomCritic.Web
             services.Add(new ServiceDescriptor(typeof(IStatisticsService), typeof(StatisticsService), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IUserStatisticProvider), typeof(UserStatisticProvider), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IEscapeRoomCityStatisticProvider), typeof(EscapeRoomCityCityStatisticProvider), ServiceLifetime.Scoped));
-
-            var secret = new SecretProvider();
-            var key = Encoding.ASCII.GetBytes(secret.GetSecret());
+            services.AddSingleton(Configuration);
+            var key = Encoding.ASCII.GetBytes(Configuration["IdentitySecret:Secret"]);
             services.AddAuthentication(x =>
                 {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

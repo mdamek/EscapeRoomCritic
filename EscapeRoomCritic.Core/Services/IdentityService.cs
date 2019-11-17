@@ -5,6 +5,7 @@ using System.Text;
 using EscapeRoomCritic.Core.DTOs.Users;
 using EscapeRoomCritic.Core.Exceptions;
 using EscapeRoomCritic.Core.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EscapeRoomCritic.Core.Services
@@ -12,12 +13,12 @@ namespace EscapeRoomCritic.Core.Services
     public class IdentityService : IIdentityService
     {
         private readonly IUserRepository _userRepository;
-        private readonly ISecretProvider _secretProvider;
+        private readonly IConfiguration _configuration;
 
-        public IdentityService(IUserRepository userRepository, ISecretProvider secretProvider)
+        public IdentityService(IUserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
-            _secretProvider = secretProvider;
+            this._configuration = configuration;
         }
         public UserTokenDto Authenticate(string username, string password)
         {
@@ -27,7 +28,7 @@ namespace EscapeRoomCritic.Core.Services
                 throw new BadCredentialsException("Username or password is incorrect");
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretProvider.GetSecret());
+            var key = Encoding.ASCII.GetBytes(_configuration["IdentitySecret:Secret"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

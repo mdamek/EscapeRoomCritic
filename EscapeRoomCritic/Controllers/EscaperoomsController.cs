@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EscapeRoomCritic.Web.Controllers
 {
-    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class EscapeRoomsController : ControllerBase
@@ -75,10 +74,10 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [Authorize(Roles = Role.Owner + ", " + Role.Admin)]
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] EditEscapeRoomDto value)
+        [HttpPut]
+        public ActionResult Put(EditEscapeRoomDto value)
         {
-            _escapeRoomService.Edit(id, value);
+            _escapeRoomService.Edit(value);
             return Ok();
         }
 

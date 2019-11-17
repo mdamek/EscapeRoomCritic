@@ -42,10 +42,10 @@ namespace EscapeRoomCritic.Core.Services
             _userRepository.Add(newUser);
         }
 
-        public void Edit(int id, EditUserDto editUser)
+        public void Edit(EditUserDto editUser)
         {
             ValidateRoles(editUser.Role);
-            _userRepository.Edit(id, editUser);
+            _userRepository.Edit(editUser);
         }
 
         public void Delete(int id)

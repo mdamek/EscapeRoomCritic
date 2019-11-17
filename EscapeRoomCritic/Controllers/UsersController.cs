@@ -78,10 +78,10 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [Authorize(Roles = Role.Visitor + "," + Role.Admin)]
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] EditUserDto value)
+        [HttpPut]
+        public ActionResult Put(EditUserDto value)
         {
-            _userService.Edit(id, value);
+            _userService.Edit(value);
             return Ok();
         }
 

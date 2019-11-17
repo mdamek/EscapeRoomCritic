@@ -8,7 +8,7 @@ namespace EscapeRoomCritic.Core.Services
         IEnumerable<EscapeRoomDto> GetAll();
         EscapeRoomDto GetById(int id);
         void Add(NewEscapeRoomDto escapeRoom);
-        void Edit(int id, EditEscapeRoomDto escapeRoom);
+        void Edit(EditEscapeRoomDto escapeRoom);
         void Delete(int id);
     }
 }

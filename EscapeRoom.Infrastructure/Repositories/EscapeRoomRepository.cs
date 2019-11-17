@@ -25,10 +25,10 @@ namespace EscapeRoomCritic.Infrastructure.Repositories
             }
         }
 
-        public EscapeRoom Edit(int id, EditEscapeRoomDto escapeRoom)
+        public void Edit(EditEscapeRoomDto escapeRoom)
         {
-            var escapeRoomEntity = _dbContext.EscapeRooms.FirstOrDefault(e => e.EscapeRoomId == id);
-            if(escapeRoomEntity == null) throw new CanNotFindValueException($"Escape room with {id} do not exits");
+            var escapeRoomEntity = _dbContext.EscapeRooms.FirstOrDefault(e => e.EscapeRoomId == escapeRoom.Id);
+            if(escapeRoomEntity == null) throw new CanNotFindValueException($"Escape room with {escapeRoom.Id} do not exits");
 
             escapeRoomEntity.Name = escapeRoom.Name;
             escapeRoomEntity.Time = escapeRoom.Time;
@@ -44,7 +44,6 @@ namespace EscapeRoomCritic.Infrastructure.Repositories
             escapeRoomEntity.Price = escapeRoom.Price;
 
             _dbContext.SaveChanges();
-            return _dbContext.EscapeRooms.Find(id);
         }
 
         public void Remove(int escapeRoomId)

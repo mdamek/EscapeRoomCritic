@@ -7,7 +7,7 @@ namespace EscapeRoomCritic.Core.Repositories
     public interface IUserRepository
     {
         void Add(User user);
-        User Edit(int id, EditUserDto user);
+        void Edit(EditUserDto user);
         void Remove(int userId);
         IEnumerable<User> GetUsers();
         User FindById(int userId);

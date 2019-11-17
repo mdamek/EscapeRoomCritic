@@ -27,7 +27,7 @@ namespace EscapeRoomCritic.Web.Controllers
         [AllowAnonymous]
         [HttpPost("authenticate")]
 
-        public IActionResult Authenticate(Credentials credentials)
+        public IActionResult Authenticate([FromBody] Credentials credentials)
         {
             var user = _identityService.Authenticate(credentials.Username, credentials.Password);
             return Ok(user);

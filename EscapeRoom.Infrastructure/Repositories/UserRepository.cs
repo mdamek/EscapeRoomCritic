@@ -23,17 +23,16 @@ namespace EscapeRoomCritic.Infrastructure.Repositories
             _dbContext.SaveChanges();
         }
 
-        public User Edit(int id, EditUserDto user)
+        public void Edit(EditUserDto user)
         {
-            var userEntity = _dbContext.Users.FirstOrDefault(e => e.UserId == id);
-            if(userEntity == null) throw new CanNotFindValueException($"There is no user with {id} id");
+            var userEntity = _dbContext.Users.FirstOrDefault(e => e.UserId == user.Id);
+            if(userEntity == null) throw new CanNotFindValueException($"There is no user with {user.Id} id");
             userEntity.Role = user.Role;
             userEntity.FirstName = user.FirstName;
             userEntity.LastName = user.LastName;
             userEntity.Username = user.Username;
             userEntity.Password = user.Password;
             _dbContext.SaveChanges();
-            return _dbContext.Users.Find(id);
         }
 
         public void Remove(int userId)

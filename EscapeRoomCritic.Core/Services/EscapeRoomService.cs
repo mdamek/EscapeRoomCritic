@@ -54,10 +54,10 @@ namespace EscapeRoomCritic.Core.Services
         }
 
 
-        public void Edit(int id, EditEscapeRoomDto escapeRoom)
+        public void Edit(EditEscapeRoomDto escapeRoom)
         {
 
-            _escapeRoomRepository.Edit(id, escapeRoom);
+            _escapeRoomRepository.Edit(escapeRoom);
         }
 
         public void Delete(int id)
