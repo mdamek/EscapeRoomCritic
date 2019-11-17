@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EscapeRoomCritic.Core.DTOs;
 using EscapeRoomCritic.Core.DTOs.EscapeRooms;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Repositories;
@@ -18,12 +17,12 @@ namespace EscapeRoomCritic.Core.Services
 
         public IEnumerable<EscapeRoomDto> GetAll()
         {
-            var allEscapeRooms =  _escapeRoomRepository.GetEscapeRooms();
+            var allEscapeRooms = _escapeRoomRepository.GetEscapeRooms();
             return allEscapeRooms.ToList().ConvertAll(e => new EscapeRoomDto
             {
                 Category = e.Category, Description = e.Description, Email = e.Email, ForAdult = e.ForAdult,
-                Name = e.Name, OwnerId = e.UserId, PhoneNumber = e.PhoneNumber, MaxPeopleNumber = e.MaxPeopleNumber,
-                Time = e.Time, Price = e.Price
+                Name = e.Name, PhoneNumber = e.PhoneNumber, MaxPeopleNumber = e.MaxPeopleNumber,
+                Time = e.Time, Price = e.Price, City = e.City, BuildingNumber = e.BuildingNumber, Street = e.Street, Id = e.EscapeRoomId
             });
         }
 
@@ -34,8 +33,11 @@ namespace EscapeRoomCritic.Core.Services
             {
                 Category = escapeRoom.Category, Description = escapeRoom.Description, Email = escapeRoom.Email,
                 ForAdult = escapeRoom.ForAdult, MaxPeopleNumber = escapeRoom.MaxPeopleNumber,
-                Name = escapeRoom.Name, OwnerId = escapeRoom.UserId, PhoneNumber = escapeRoom.PhoneNumber,
-                Time = escapeRoom.Time, Price = escapeRoom.Price
+                Name = escapeRoom.Name, PhoneNumber = escapeRoom.PhoneNumber,
+                Time = escapeRoom.Time, Price = escapeRoom.Price,
+                City = escapeRoom.City,
+                BuildingNumber = escapeRoom.BuildingNumber,
+                Street = escapeRoom.Street, Id = escapeRoom.EscapeRoomId
             };
         }
 
@@ -46,27 +48,21 @@ namespace EscapeRoomCritic.Core.Services
                 Category = escapeRoom.Category, Description = escapeRoom.Description, Email = escapeRoom.Email,
                 ForAdult = escapeRoom.ForAdult, MaxPeopleNumber = escapeRoom.MaxPeopleNumber,
                 Name = escapeRoom.Name, PhoneNumber = escapeRoom.PhoneNumber, Price = escapeRoom.Price,
-                Time = escapeRoom.Time
+                Time = escapeRoom.Time, BuildingNumber = escapeRoom.BuildingNumber, Street = escapeRoom.Street, City = escapeRoom.City
             };
-            _escapeRoomRepository.Add(newEscapeRoom, escapeRoom.OwnerId);
+            _escapeRoomRepository.Add(newEscapeRoom);
         }
 
 
         public void Edit(int id, EditEscapeRoomDto escapeRoom)
         {
-            var escapeRoomToEdit = new EscapeRoom()
-            {
-                Category = escapeRoom.Category, Description = escapeRoom.Description, Email = escapeRoom.Email,
-                ForAdult = escapeRoom.ForAdult, MaxPeopleNumber = escapeRoom.MaxPeopleNumber, Name = escapeRoom.Name,
-                PhoneNumber = escapeRoom.PhoneNumber, Price = escapeRoom.Price, Time = escapeRoom.Time
-            };
-            _escapeRoomRepository.Edit(id, escapeRoomToEdit);
+
+            _escapeRoomRepository.Edit(id, escapeRoom);
         }
 
         public void Delete(int id)
         {
             _escapeRoomRepository.Remove(id);
         }
-
     }
 }

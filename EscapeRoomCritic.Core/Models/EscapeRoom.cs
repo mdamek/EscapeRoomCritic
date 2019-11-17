@@ -1,4 +1,6 @@
-﻿namespace EscapeRoomCritic.Core.Models
+﻿using System.Collections.Generic;
+
+namespace EscapeRoomCritic.Core.Models
 {
     public class EscapeRoom
     {
@@ -12,7 +14,9 @@
         public int MaxPeopleNumber { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public int UserId { get; set; }
-        public User Owner { get; set; }
+        public string Street { get; set; }
+        public int BuildingNumber { get; set; }
+        public string City { get; set; }
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

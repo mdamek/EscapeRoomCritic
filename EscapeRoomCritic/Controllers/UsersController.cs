@@ -60,7 +60,7 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = Role.Admin)]
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Post([FromBody] NewUserDto value)
         {

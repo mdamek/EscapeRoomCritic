@@ -45,6 +45,9 @@ namespace EscapeRoomCritic.Web
             services.Add(new ServiceDescriptor(typeof(IEscapeRoomRepository), typeof(EscapeRoomRepository), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IReviewService), typeof(ReviewService), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IReviewRepository), typeof(ReviewRepository), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IStatisticsService), typeof(StatisticsService), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IUserStatisticProvider), typeof(UserStatisticProvider), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IEscapeRoomCityStatisticProvider), typeof(EscapeRoomCityCityStatisticProvider), ServiceLifetime.Scoped));
 
             var secret = new SecretProvider();
             var key = Encoding.ASCII.GetBytes(secret.GetSecret());

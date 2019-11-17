@@ -5,8 +5,8 @@ namespace EscapeRoomCritic.Core.Services
 {
     public interface IReviewService
     {
-        IEnumerable<ReviewDto> GetByRoomId(int roomId);
-        IEnumerable<ReviewDto> GetByUserId(int userId);
+        IEnumerable<ReviewForEscapeRoomDto> GetByRoomId(int roomId);
+        IEnumerable<ReviewForUserDto> GetByUserId(int userId);
         void Add(NewReviewDto review);
         void Delete(int id);
     }

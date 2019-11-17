@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EscapeRoomCritic.Core.DTOs;
 using EscapeRoomCritic.Core.DTOs.EscapeRooms;
 using EscapeRoomCritic.Core.Models;
 using EscapeRoomCritic.Core.Services;

@@ -27,7 +27,7 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(400)]
         [AllowAnonymous]
         [HttpGet("byEscapeRoom/{id}")]
-        public ActionResult<ReviewDto> GetByEscapeRoom(int id)
+        public ActionResult<ReviewForEscapeRoomDto> GetByEscapeRoom(int id)
         {
             return Ok(_reviewService.GetByRoomId(id));
         }
@@ -41,7 +41,7 @@ namespace EscapeRoomCritic.Web.Controllers
         [ProducesResponseType(400)]
         [AllowAnonymous]
         [HttpGet("byUser/{id}")]
-        public ActionResult<ReviewDto> GetByUser(int id)
+        public ActionResult<ReviewForUserDto> GetByUser(int id)
         {
             return Ok(_reviewService.GetByUserId(id));
         }

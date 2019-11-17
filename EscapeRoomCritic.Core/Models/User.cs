@@ -11,6 +11,6 @@ namespace EscapeRoomCritic.Core.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
-        public ICollection<EscapeRoom> EscapeRooms { get; set; } = new List<EscapeRoom>();
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

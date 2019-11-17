@@ -19,13 +19,13 @@ namespace EscapeRoomCritic.Core.Services
         public IEnumerable<UserDto> GetAll()
         {
             var allUsers = _userRepository.GetUsers();
-            return allUsers.ToList().ConvertAll(e => new UserDto{FirstName = e.FirstName, LastName = e.LastName, Role = e.Role, Username = e.Username});
+            return allUsers.ToList().ConvertAll(e => new UserDto{FirstName = e.FirstName, LastName = e.LastName, Role = e.Role, Username = e.Username, Id = e.UserId});
         }
         
         public UserDto GetById(int id)
         {
             var user = _userRepository.FindById(id);
-            return new UserDto{FirstName = user.FirstName, LastName = user.LastName, Username = user.Username, Role = user.Role};
+            return new UserDto{FirstName = user.FirstName, LastName = user.LastName, Username = user.Username, Role = user.Role, Id = user.UserId};
         }
 
         public void Add(NewUserDto user)
@@ -45,15 +45,7 @@ namespace EscapeRoomCritic.Core.Services
         public void Edit(int id, EditUserDto editUser)
         {
             ValidateRoles(editUser.Role);
-            var user = new User
-            {
-                FirstName = editUser.FirstName,
-                LastName = editUser.LastName,
-                Password = editUser.Password,
-                Role = editUser.Role,
-                Username = editUser.Username
-            };
-            _userRepository.Edit(id, user);
+            _userRepository.Edit(id, editUser);
         }
 
         public void Delete(int id)

@@ -5,11 +5,11 @@ namespace EscapeRoomCritic.Core.DTOs.Reviews
 {
     public class NewReviewDto
     {
-        [Required(ErrorMessage = "Title is required"), MaxLength(50)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Title is required"), MaxLength(50)]
         public string Title { get; set; }
-        [Required(ErrorMessage = "Content is required"), MaxLength(300)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Content is required"), MaxLength(300)]
         public string Content { get; set; }
-        [Required(ErrorMessage = "Rating is required")]
+        [Required(ErrorMessage = "Rating is required in range 1-10"), Range(1, 10)]
         public Rating Rating { get; set; }
         [Required(ErrorMessage = "UserId is required")]
         public int UserId { get; set; }
