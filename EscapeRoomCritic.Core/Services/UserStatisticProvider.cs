@@ -10,12 +10,14 @@ namespace EscapeRoomCritic.Core.Services
     {
         public double CalculateAverageReviewLength(List<Review> reviews)
         {
-            return reviews.Select(e => Convert.ToDouble(e.Content.Length)).Sum() / Convert.ToDouble(reviews.Count != 0 ? Convert.ToDouble(reviews.Count) : 0);
+            if (reviews.Count == 0) return 0;
+            return reviews.Select(e => Convert.ToDouble(e.Content.Length)).Sum() / Convert.ToDouble(reviews.Count);
         }
 
         public double CalculateAverageRating(List<Review> reviews)
         {
-            return Convert.ToDouble(reviews.Select(e => (int)e.Rating).Sum()) / Convert.ToDouble(reviews.Count != 0 ? Convert.ToDouble(reviews.Count) : 0);
+            if (reviews.Count == 0) return 0;
+            return Convert.ToDouble(reviews.Select(e => (int)e.Rating).Sum()) / Convert.ToDouble(reviews.Count);
         }
 
         public string FindFavoriteEscapeRoom(List<Review> reviews, List<EscapeRoom> escapeRooms)

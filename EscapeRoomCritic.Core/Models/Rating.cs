@@ -2,6 +2,7 @@
 {
     public enum Rating
     {
+        Zero,
         One,
         Two,
         Tree,

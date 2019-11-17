@@ -9,7 +9,7 @@ namespace EscapeRoomCritic.Core.DTOs.Reviews
         public string Title { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Content is required"), MaxLength(300)]
         public string Content { get; set; }
-        [Required(ErrorMessage = "Rating is required in range 1-10"), Range(1, 10)]
+        [Required(ErrorMessage = "Rating is required in range 0-10"), Range(0, 10)]
         public Rating Rating { get; set; }
         [Required(ErrorMessage = "UserId is required")]
         public int UserId { get; set; }

@@ -10,11 +10,13 @@ namespace EscapeRoomCritic.Core.Services
     {
         public double CalculateAveragePrice(List<EscapeRoom> escapeRooms)
         {
+            if (escapeRooms.Count == 0) return 0;
             return escapeRooms.Select(e => e.Price).Sum() / Convert.ToDouble(escapeRooms.Count);
         }
 
         public double CalculateAverageGameTime(List<EscapeRoom> escapeRooms)
         {
+            if (escapeRooms.Count == 0) return 0;
             return Convert.ToDouble(escapeRooms.Select(e => e.Time).Sum()) / Convert.ToDouble(escapeRooms.Count);
         }
 
